@@ -16,6 +16,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import { AgentPipeline } from "@/components/agent-pipeline";
 import { PostCard } from "@/components/post-card";
+import { PublishPanel } from "@/components/publish-panel";
 import { generatePost } from "@/lib/api";
 import { addToHistory } from "@/lib/history";
 import type { AgentName, AgentStep, GeneratedPost, Length, Tone } from "@/lib/types";
@@ -186,6 +187,7 @@ function Dashboard() {
                 />
               )}
             </AnimatePresence>
+            {post && <PublishPanel key={`pub-${post.id}`} post={post} />}
           </div>
         </div>
 

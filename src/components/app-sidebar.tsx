@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { LayoutDashboard, History, Settings, Sparkles } from "lucide-react";
+import { LayoutDashboard, History, Settings, Sparkles, CalendarClock } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -15,9 +15,10 @@ import {
 
 const items = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
+  { title: "Scheduled", url: "/scheduled", icon: CalendarClock },
   { title: "History", url: "/history", icon: History },
   { title: "Settings", url: "/settings", icon: Settings },
-];
+] as const;
 
 export function AppSidebar() {
   const currentPath = useRouterState({ select: (s) => s.location.pathname });
