@@ -1,16 +1,8 @@
-import { useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { Copy, Download, RefreshCw, Sparkles, ChevronDown } from "lucide-react";
+import { Copy, RefreshCw, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { exportLinkedInImage, type ExportSize } from "@/lib/export-image";
 import type { GeneratedPost } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -21,25 +13,10 @@ interface Props {
 }
 
 export function PostCard({ post, onRegenerate, generating }: Props) {
-  const previewRef = useRef<HTMLDivElement>(null);
-  const [exporting, setExporting] = useState(false);
-
   const handleCopy = async () => {
     const text = `${post.content}\n\n${post.hashtags.map((h) => `#${h}`).join(" ")}`;
     await navigator.clipboard.writeText(text);
     toast.success("Post copied to clipboard");
-  };
-
-  const handleExport = async (size: ExportSize) => {
-    setExporting(true);
-    try {
-      await exportLinkedInImage(post, size);
-      toast.success(`Exported ${size === "square" ? "1080×1080" : "1200×627"} PNG`);
-    } catch {
-      toast.error("Failed to export image");
-    } finally {
-      setExporting(false);
-    }
   };
 
   const scoreColor =
@@ -61,8 +38,7 @@ export function PostCard({ post, onRegenerate, generating }: Props) {
           <ScoreRing score={post.qualityScore} colorClass={scoreColor} />
         </div>
 
-        {/* In-app preview only — export uses a dedicated off-screen renderer for pixel-perfect LinkedIn look */}
-        <div ref={previewRef} className="rounded-xl border border-border/60 bg-background p-5">
+        <div className="rounded-xl border border-border/60 bg-background p-5">
           <div className="mb-3 flex items-center gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gradient-primary text-sm font-semibold text-primary-foreground">
               AI
@@ -103,23 +79,6 @@ export function PostCard({ post, onRegenerate, generating }: Props) {
             <RefreshCw className={cn("mr-1.5 h-3.5 w-3.5", generating && "animate-spin")} />
             Regenerate
           </Button>
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button size="sm" variant="outline" disabled={exporting}>
-                <Download className={cn("mr-1.5 h-3.5 w-3.5", exporting && "animate-pulse")} />
-                Export PNG
-                <ChevronDown className="ml-1 h-3 w-3" />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem onClick={() => handleExport("square")}>
-                Square · 1080 × 1080
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleExport("landscape")}>
-                Landscape · 1200 × 627
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
         </div>
       </div>
     </motion.div>

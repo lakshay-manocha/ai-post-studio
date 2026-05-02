@@ -35,12 +35,12 @@ function useLiveQueue() {
     refresh();
     const onSched = () => refresh();
     const onPub = () => refresh();
-    window.addEventListener("scheduled_posts_v1:changed", onSched);
-    window.addEventListener("published_posts_v1:changed", onPub);
+    window.addEventListener("scheduled_posts_v2:changed", onSched);
+    window.addEventListener("published_posts_v2:changed", onPub);
     const id = window.setInterval(refresh, 5000);
     return () => {
-      window.removeEventListener("scheduled_posts_v1:changed", onSched);
-      window.removeEventListener("published_posts_v1:changed", onPub);
+      window.removeEventListener("scheduled_posts_v2:changed", onSched);
+      window.removeEventListener("published_posts_v2:changed", onPub);
       window.clearInterval(id);
     };
   }, []);
@@ -105,9 +105,9 @@ function ScheduledPage() {
                 </div>
                 <p className="line-clamp-3 text-xs text-muted-foreground">{s.post.content}</p>
                 <div className="mt-3 flex items-center justify-between border-t border-border/60 pt-2">
-                  <span className="text-[11px] text-muted-foreground">
+                  <span className="truncate text-[11px] text-muted-foreground">
                     {new Date(s.scheduledFor).toLocaleString()} ·{" "}
-                    {s.platform === "linkedin-profile" ? "Profile" : "Company"}
+                    {s.target.destination === "personal" ? "Profile" : "Company"}
                   </span>
                   <Button
                     size="sm"
@@ -149,9 +149,14 @@ function ScheduledPage() {
                   </span>
                 </div>
                 <p className="line-clamp-3 text-xs text-muted-foreground">{p.post.content}</p>
-                <div className="mt-3 border-t border-border/60 pt-2 text-[11px] text-muted-foreground">
-                  {new Date(p.publishedAt).toLocaleString()} ·{" "}
-                  {p.platform === "linkedin-profile" ? "Profile" : "Company"}
+                <div className="mt-3 space-y-1 border-t border-border/60 pt-2 text-[11px] text-muted-foreground">
+                  <div>
+                    {new Date(p.publishedAt).toLocaleString()} ·{" "}
+                    {p.target.destination === "personal" ? "Profile" : "Company"}
+                  </div>
+                  {p.target.target_page_url && (
+                    <div className="truncate font-mono">{p.target.target_page_url}</div>
+                  )}
                 </div>
               </article>
             ))}
