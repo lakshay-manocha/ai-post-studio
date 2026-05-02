@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { Linkedin, ShieldCheck, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -13,7 +15,12 @@ import {
 } from "@/components/ui/select";
 import { useTheme } from "@/components/theme-provider";
 import { clearHistory } from "@/lib/history";
-import type { Length, Tone } from "@/lib/types";
+import {
+  getStoredAuth,
+  setStoredAuth,
+  clearStoredAuth,
+} from "@/lib/publisher";
+import type { Length, LinkedInScope, Tone } from "@/lib/types";
 
 export const Route = createFileRoute("/_app/settings")({
   head: () => ({
