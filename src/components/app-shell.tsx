@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Outlet, Link } from "@tanstack/react-router";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "./app-sidebar";
@@ -5,8 +6,13 @@ import { ThemeToggle } from "./theme-toggle";
 import { Toaster } from "@/components/ui/sonner";
 import { Button } from "@/components/ui/button";
 import { Github } from "lucide-react";
+import { startScheduler } from "@/lib/publisher";
 
 export function AppShell() {
+  useEffect(() => {
+    startScheduler();
+  }, []);
+
   return (
     <SidebarProvider>
       <div className="flex min-h-screen w-full bg-background">
