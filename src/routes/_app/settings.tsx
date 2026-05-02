@@ -160,6 +160,78 @@ function SettingsPage() {
         </Section>
 
         <Section
+          title={
+            <span className="flex items-center gap-2">
+              <Linkedin className="h-4 w-4 text-primary" />
+              LinkedIn connection
+              {connected && (
+                <span className="ml-1 inline-flex items-center gap-1 rounded-full bg-success/10 px-2 py-0.5 text-[10px] font-medium text-success">
+                  <ShieldCheck className="h-3 w-3" /> Connected
+                </span>
+              )}
+            </span>
+          }
+          desc="OAuth tokens for the publishing system. In production these come from the LinkedIn OAuth flow and live server-side; this UI is for local mock testing."
+        >
+          <div className="space-y-4">
+            <div>
+              <Label htmlFor="lk-token" className="text-xs font-medium text-muted-foreground">
+                Access token
+              </Label>
+              <Input
+                id="lk-token"
+                type="password"
+                value={accessToken}
+                onChange={(e) => setAccessToken(e.target.value)}
+                placeholder="AQX... (LinkedIn OAuth access token)"
+                className="mt-1.5 font-mono text-sm"
+                autoComplete="off"
+              />
+            </div>
+            <div>
+              <Label htmlFor="lk-userid" className="text-xs font-medium text-muted-foreground">
+                User ID <span className="text-foreground/60">(internal database ID, not LinkedIn ID)</span>
+              </Label>
+              <Input
+                id="lk-userid"
+                value={userId}
+                onChange={(e) => setUserId(e.target.value)}
+                placeholder="usr_abc123"
+                className="mt-1.5 font-mono text-sm"
+              />
+            </div>
+            <div>
+              <Label className="text-xs font-medium text-muted-foreground">Granted OAuth scopes</Label>
+              <div className="mt-2 space-y-2">
+                <ScopeRow
+                  scope="w_member_social"
+                  label="Personal profile posts"
+                  checked={scopes.includes("w_member_social")}
+                  onChange={(c) => toggleScope("w_member_social", c)}
+                />
+                <ScopeRow
+                  scope="w_organization_social"
+                  label="Company page posts"
+                  checked={scopes.includes("w_organization_social")}
+                  onChange={(c) => toggleScope("w_organization_social", c)}
+                />
+              </div>
+            </div>
+            <div className="flex flex-wrap gap-2 pt-1">
+              <Button onClick={saveLinkedIn} size="sm">
+                {connected ? "Update connection" : "Connect LinkedIn"}
+              </Button>
+              {connected && (
+                <Button onClick={disconnectLinkedIn} variant="outline" size="sm">
+                  <Trash2 className="mr-1.5 h-3.5 w-3.5" />
+                  Disconnect
+                </Button>
+              )}
+            </div>
+          </div>
+        </Section>
+
+        <Section
           title="Backend"
           desc="Point this to your LangGraph + Ollama API. Leave blank to use the built-in mock generator."
         >
