@@ -38,10 +38,26 @@ function SettingsPage() {
   const [tone, setTone] = useState<Tone>("professional");
   const [length, setLength] = useState<Length>("medium");
 
+  // LinkedIn auth (mock — real app uses OAuth flow + backend token storage)
+  const [accessToken, setAccessToken] = useState("");
+  const [userId, setUserId] = useState("");
+  const [scopes, setScopes] = useState<LinkedInScope[]>([
+    "w_member_social",
+    "w_organization_social",
+  ]);
+  const [connected, setConnected] = useState(false);
+
   useEffect(() => {
     setApiBase(localStorage.getItem("api_base_url") ?? "");
     setTone((localStorage.getItem("default_tone") as Tone) ?? "professional");
     setLength((localStorage.getItem("default_length") as Length) ?? "medium");
+    const auth = getStoredAuth();
+    if (auth) {
+      setAccessToken(auth.access_token);
+      setUserId(auth.user_id);
+      setScopes(auth.scopes);
+      setConnected(true);
+    }
   }, []);
 
   const save = () => {
@@ -49,6 +65,33 @@ function SettingsPage() {
     localStorage.setItem("default_tone", tone);
     localStorage.setItem("default_length", length);
     toast.success("Settings saved");
+  };
+
+  const saveLinkedIn = () => {
+    if (!accessToken.trim()) return toast.error("Access token is required");
+    if (!userId.trim()) return toast.error("User ID is required");
+    if (scopes.length === 0) return toast.error("Select at least one OAuth scope");
+    setStoredAuth({
+      access_token: accessToken.trim(),
+      user_id: userId.trim(),
+      scopes,
+    });
+    setConnected(true);
+    toast.success("LinkedIn connection saved");
+  };
+
+  const disconnectLinkedIn = () => {
+    clearStoredAuth();
+    setAccessToken("");
+    setUserId("");
+    setConnected(false);
+    toast.success("LinkedIn disconnected");
+  };
+
+  const toggleScope = (scope: LinkedInScope, checked: boolean) => {
+    setScopes((prev) =>
+      checked ? Array.from(new Set([...prev, scope])) : prev.filter((s) => s !== scope),
+    );
   };
 
   const onClear = () => {
