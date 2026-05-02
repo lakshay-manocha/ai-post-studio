@@ -280,7 +280,7 @@ function Section({
   children,
   danger,
 }: {
-  title: string;
+  title: React.ReactNode;
   desc?: string;
   children: React.ReactNode;
   danger?: boolean;
@@ -296,5 +296,34 @@ function Section({
       {desc && <p className="mt-1 text-xs text-muted-foreground">{desc}</p>}
       <div className="mt-4">{children}</div>
     </section>
+  );
+}
+
+function ScopeRow({
+  scope,
+  label,
+  checked,
+  onChange,
+}: {
+  scope: LinkedInScope;
+  label: string;
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+}) {
+  return (
+    <label
+      htmlFor={`scope-${scope}`}
+      className="flex cursor-pointer items-center gap-3 rounded-lg border border-border/60 p-2.5 has-[:checked]:border-primary/40 has-[:checked]:bg-primary/5"
+    >
+      <Checkbox
+        id={`scope-${scope}`}
+        checked={checked}
+        onCheckedChange={(v) => onChange(v === true)}
+      />
+      <div className="min-w-0 flex-1">
+        <p className="text-sm font-medium leading-none">{label}</p>
+        <p className="mt-1 font-mono text-[11px] text-muted-foreground">{scope}</p>
+      </div>
+    </label>
   );
 }
