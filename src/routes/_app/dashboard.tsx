@@ -100,12 +100,96 @@ function Dashboard() {
 
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6">
-      <div className="mb-8">
-        <h1 className="font-display text-3xl font-semibold tracking-tight">Dashboard</h1>
+      {/* Hero / welcome */}
+      <motion.section
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="relative mb-8 overflow-hidden rounded-2xl border border-border/60 bg-card p-6 shadow-sm sm:p-8"
+      >
+        <div className="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-gradient-primary opacity-20 blur-3xl" />
+        <div className="absolute -bottom-24 -left-16 h-56 w-56 rounded-full bg-gradient-primary opacity-10 blur-3xl" />
+        <div className="relative">
+          <div className="inline-flex items-center gap-2 rounded-full border border-border/60 bg-background/60 px-3 py-1 text-[11px] text-muted-foreground backdrop-blur">
+            <span className="relative flex h-1.5 w-1.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-primary opacity-75" />
+              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-primary" />
+            </span>
+            RoarAI Systems · Intelligent AI Solutions
+          </div>
+          <h1 className="mt-4 max-w-2xl font-display text-3xl font-semibold tracking-tight sm:text-4xl">
+            Build Intelligent Automation with{" "}
+            <span className="text-gradient">RoarAI Systems</span>
+          </h1>
+          <p className="mt-3 max-w-2xl text-sm text-muted-foreground sm:text-base">
+            AI-powered software, workflow automation, cinematic AI content generation, and scalable
+            digital solutions.
+          </p>
+          <div className="mt-5 flex flex-wrap items-center gap-2">
+            <Button asChild size="sm" className="shadow-elegant">
+              <Link to="/commercial">
+                <Clapperboard className="mr-1.5 h-4 w-4" />
+                Launch Commercial Studio
+              </Link>
+            </Button>
+            <Button asChild size="sm" variant="outline">
+              <Link to="/scheduled">
+                Explore AI Automation <ArrowRight className="ml-1 h-3.5 w-3.5" />
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </motion.section>
+
+      {/* Commercial Studio quick-access */}
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.05 }}
+        className="mb-8"
+      >
+        <Link
+          to="/commercial"
+          className="group relative block overflow-hidden rounded-2xl border border-border/60 bg-card p-5 shadow-sm transition-all hover:shadow-elegant"
+        >
+          <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+            <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-primary/30 blur-3xl" />
+          </div>
+          <div className="relative flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-start gap-4">
+              <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-primary shadow-glow">
+                <Clapperboard className="h-5 w-5 text-primary-foreground" />
+                <span className="absolute inset-0 animate-ping rounded-xl bg-primary-glow/30" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h3 className="font-display text-base font-semibold tracking-tight">
+                    AI Commercial Studio
+                  </h3>
+                  <span className="rounded-full bg-accent px-2 py-0.5 text-[10px] font-medium text-accent-foreground">
+                    New
+                  </span>
+                </div>
+                <p className="mt-1 max-w-xl text-xs text-muted-foreground sm:text-sm">
+                  Generate cinematic AI advertisements using ComfyUI, AI narration, and automated
+                  rendering.
+                </p>
+              </div>
+            </div>
+            <Button size="sm" className="shrink-0 shadow-elegant">
+              Launch Studio <ArrowRight className="ml-1 h-3.5 w-3.5" />
+            </Button>
+          </div>
+        </Link>
+      </motion.div>
+
+      <div className="mb-2">
+        <h2 className="font-display text-2xl font-semibold tracking-tight">Dashboard</h2>
         <p className="mt-1 text-sm text-muted-foreground">
           Describe a topic. The agent pipeline takes care of the rest.
         </p>
       </div>
+      <div className="mb-6" />
 
       <div className="grid gap-6 lg:grid-cols-[1fr_340px]">
         {/* Left: input + result */}
