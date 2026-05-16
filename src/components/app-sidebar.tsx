@@ -15,7 +15,7 @@ import {
 
 const items = [
   { title: "Dashboard", url: "/dashboard", icon: LayoutDashboard },
-  { title: "Commercial", url: "/commercial", icon: Clapperboard },
+  { title: "Commercial Studio", url: "/commercial", icon: Clapperboard },
   { title: "Scheduled", url: "/scheduled", icon: CalendarClock },
   { title: "History", url: "/history", icon: History },
   { title: "Settings", url: "/settings", icon: Settings },
@@ -32,9 +32,14 @@ export function AppSidebar() {
           <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-primary shadow-glow">
             <Sparkles className="h-4 w-4 text-primary-foreground" />
           </div>
-          <span className="font-display text-base font-semibold tracking-tight group-data-[collapsible=icon]:hidden">
-            Postwright
-          </span>
+          <div className="flex flex-col group-data-[collapsible=icon]:hidden">
+            <span className="font-display text-base font-semibold tracking-tight leading-tight">
+              RoarAI Systems
+            </span>
+            <span className="text-[10px] text-muted-foreground leading-tight">
+              Postwright Studio
+            </span>
+          </div>
         </Link>
       </SidebarHeader>
 
@@ -59,8 +64,9 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter>
-        <div className="px-2 py-2 text-[11px] text-muted-foreground group-data-[collapsible=icon]:hidden">
-          v1 · Mock backend active
+        <div className="px-2 py-2 text-[10px] leading-relaxed text-muted-foreground group-data-[collapsible=icon]:hidden">
+          <div className="font-medium text-foreground/80">RoarAI Systems Pvt. Ltd.</div>
+          <div className="italic">Intelligent AI Solutions · Built for the Future</div>
         </div>
       </SidebarFooter>
     </Sidebar>
