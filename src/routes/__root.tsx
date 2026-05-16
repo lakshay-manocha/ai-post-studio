@@ -30,16 +30,16 @@ export const Route = createRootRoute({
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Postwright — Agentic LinkedIn Post Generator" },
+      { title: "RoarAI Systems · Postwright Studio" },
       {
         name: "description",
         content:
-          "Turn a topic into a polished LinkedIn post with a multi-agent AI pipeline. Research, draft, critique, and format — all in seconds.",
+          "RoarAI Systems — intelligent AI solutions, agentic workflow automation, and cinematic AI commercial generation.",
       },
-      { property: "og:title", content: "Postwright — Agentic LinkedIn Post Generator" },
+      { property: "og:title", content: "RoarAI Systems · Postwright Studio" },
       {
         property: "og:description",
-        content: "Multi-agent AI workflow that researches, drafts, critiques, and formats LinkedIn posts.",
+        content: "Agentic AI workflows, LinkedIn post generation, and the AI Commercial Studio.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
