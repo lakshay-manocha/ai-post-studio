@@ -1,7 +1,20 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, Wand2 } from "lucide-react";
+import {
+  Sparkles,
+  Wand2,
+  Clapperboard,
+  ArrowRight,
+  Brain,
+  Workflow,
+  MessageSquare,
+  Globe,
+  Cloud,
+  LineChart,
+  GraduationCap,
+  Handshake,
+} from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
