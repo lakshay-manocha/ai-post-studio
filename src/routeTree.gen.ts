@@ -15,6 +15,7 @@ import { Route as AppSettingsRouteImport } from './routes/_app/settings'
 import { Route as AppScheduledRouteImport } from './routes/_app/scheduled'
 import { Route as AppHistoryRouteImport } from './routes/_app/history'
 import { Route as AppDashboardRouteImport } from './routes/_app/dashboard'
+import { Route as AppCommercialRouteImport } from './routes/_app/commercial'
 
 const AppRoute = AppRouteImport.update({
   id: '/_app',
@@ -45,9 +46,15 @@ const AppDashboardRoute = AppDashboardRouteImport.update({
   path: '/dashboard',
   getParentRoute: () => AppRoute,
 } as any)
+const AppCommercialRoute = AppCommercialRouteImport.update({
+  id: '/commercial',
+  path: '/commercial',
+  getParentRoute: () => AppRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/commercial': typeof AppCommercialRoute
   '/dashboard': typeof AppDashboardRoute
   '/history': typeof AppHistoryRoute
   '/scheduled': typeof AppScheduledRoute
@@ -55,6 +62,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/commercial': typeof AppCommercialRoute
   '/dashboard': typeof AppDashboardRoute
   '/history': typeof AppHistoryRoute
   '/scheduled': typeof AppScheduledRoute
@@ -64,6 +72,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_app': typeof AppRouteWithChildren
+  '/_app/commercial': typeof AppCommercialRoute
   '/_app/dashboard': typeof AppDashboardRoute
   '/_app/history': typeof AppHistoryRoute
   '/_app/scheduled': typeof AppScheduledRoute
@@ -71,13 +80,26 @@ export interface FileRoutesById {
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard' | '/history' | '/scheduled' | '/settings'
+  fullPaths:
+    | '/'
+    | '/commercial'
+    | '/dashboard'
+    | '/history'
+    | '/scheduled'
+    | '/settings'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/history' | '/scheduled' | '/settings'
+  to:
+    | '/'
+    | '/commercial'
+    | '/dashboard'
+    | '/history'
+    | '/scheduled'
+    | '/settings'
   id:
     | '__root__'
     | '/'
     | '/_app'
+    | '/_app/commercial'
     | '/_app/dashboard'
     | '/_app/history'
     | '/_app/scheduled'
@@ -133,10 +155,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AppDashboardRouteImport
       parentRoute: typeof AppRoute
     }
+    '/_app/commercial': {
+      id: '/_app/commercial'
+      path: '/commercial'
+      fullPath: '/commercial'
+      preLoaderRoute: typeof AppCommercialRouteImport
+      parentRoute: typeof AppRoute
+    }
   }
 }
 
 interface AppRouteChildren {
+  AppCommercialRoute: typeof AppCommercialRoute
   AppDashboardRoute: typeof AppDashboardRoute
   AppHistoryRoute: typeof AppHistoryRoute
   AppScheduledRoute: typeof AppScheduledRoute
@@ -144,6 +174,7 @@ interface AppRouteChildren {
 }
 
 const AppRouteChildren: AppRouteChildren = {
+  AppCommercialRoute: AppCommercialRoute,
   AppDashboardRoute: AppDashboardRoute,
   AppHistoryRoute: AppHistoryRoute,
   AppScheduledRoute: AppScheduledRoute,
@@ -159,12 +190,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { createStart } from '@tanstack/react-start'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-  }
-}
