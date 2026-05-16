@@ -293,6 +293,69 @@ function Dashboard() {
           <AgentPipeline steps={steps} />
         </div>
       </div>
+
+      {/* Services */}
+      <section className="mt-16">
+        <div className="mb-6">
+          <h2 className="font-display text-2xl font-semibold tracking-tight">What we build</h2>
+          <p className="mt-1 text-sm text-muted-foreground">
+            RoarAI Systems services — end-to-end intelligent solutions.
+          </p>
+        </div>
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {[
+            { icon: Brain, title: "AI Model Training", desc: "Custom AI solutions tailored to your domain and data." },
+            { icon: Workflow, title: "Agentic Workflow Automation", desc: "Multi-agent orchestration that ships real work." },
+            { icon: MessageSquare, title: "AI Chatbots & RAG", desc: "Realtime assistants connected to your data warehouse." },
+            { icon: Globe, title: "Web & E-commerce", desc: "High-performance storefronts and product experiences." },
+            { icon: Cloud, title: "Cloud Solutions", desc: "AWS · Azure · GCP architecture, deploy & scale." },
+            { icon: LineChart, title: "SEO & Growth", desc: "Search visibility and revenue-driving campaigns." },
+          ].map((s) => (
+            <div
+              key={s.title}
+              className="group relative overflow-hidden rounded-2xl border border-border/60 bg-card p-5 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-elegant"
+            >
+              <div className="absolute -right-12 -top-12 h-32 w-32 rounded-full bg-primary/10 opacity-0 blur-2xl transition-opacity group-hover:opacity-100" />
+              <div className="relative">
+                <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-gradient-primary shadow-glow">
+                  <s.icon className="h-4 w-4 text-primary-foreground" />
+                </div>
+                <h3 className="mt-3 font-display text-sm font-semibold tracking-tight">{s.title}</h3>
+                <p className="mt-1 text-xs text-muted-foreground">{s.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Internship & collaboration */}
+      <section className="mt-12 mb-4">
+        <div className="relative overflow-hidden rounded-2xl border border-border/60 bg-card p-6 shadow-sm sm:p-8">
+          <div className="absolute -left-16 -bottom-16 h-48 w-48 rounded-full bg-gradient-primary opacity-15 blur-3xl" />
+          <div className="relative grid gap-4 sm:grid-cols-[1fr_auto] sm:items-center">
+            <div>
+              <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                <GraduationCap className="h-3.5 w-3.5" /> Now open
+              </div>
+              <h3 className="mt-1 font-display text-xl font-semibold tracking-tight">
+                Internships, Training & Client Collaborations
+              </h3>
+              <p className="mt-1 max-w-xl text-sm text-muted-foreground">
+                Join RoarAI Systems — work on real agentic AI products, or partner with us to ship
+                your next AI-powered launch.
+              </p>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              <Button size="sm" className="shadow-elegant">
+                <GraduationCap className="mr-1.5 h-4 w-4" /> Apply Now
+              </Button>
+              <Button size="sm" variant="outline">
+                <Handshake className="mr-1.5 h-4 w-4" /> Connect
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }
